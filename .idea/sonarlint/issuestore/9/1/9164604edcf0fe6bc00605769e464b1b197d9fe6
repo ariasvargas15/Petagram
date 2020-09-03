@@ -1,0 +1,8 @@
+
+P
+java:S1128"3Remove this unused import 'android.widget.Adapter'.(Ùƒùê8®íÜ¦Å.
+Y
+java:S1128"=Remove this unused import 'androidx.appcompat.app.ActionBar'.(·¯z8ª‡ö¢Å.
+X	java:S110"<This class has 9 parents which is greater than 5 authorized.(²Ú±8ùÚó¡Å.
+K
+java:S1128".Remove this unused import 'java.util.Objects'.(¼¸õ›8çñï¢Å.
