@@ -10,25 +10,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_main"
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"
+                app:layout_scrollFlags="scroll|enterAlways"/>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+                >
+            </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|end"
-        android:layout_margin="20dp">
+        android:padding="20dp">
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_camara"
-            android:elevation="10dp"
+            android:elevation="5dp"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
             />
     </RelativeLayout>
 </RelativeLayout>

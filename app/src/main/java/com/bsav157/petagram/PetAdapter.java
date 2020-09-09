@@ -18,10 +18,18 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder>{
 
     private ArrayList<Pet> pets;
     private Context context;
+    private boolean perfil;
 
     public PetAdapter(ArrayList<Pet> pets, Context context) {
         this.pets = pets;
         this.context = context;
+        this.perfil = false;
+    }
+
+    public PetAdapter(ArrayList<Pet> pets, Context context, boolean perfil) {
+        this.pets = pets;
+        this.context = context;
+        this.perfil = perfil;
     }
 
     @NonNull
@@ -45,6 +53,11 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder>{
                 holder.number.setText(String.valueOf(pet.getLikes()));
             }
         });
+
+        if(perfil){
+            holder.name.setVisibility(View.GONE);
+            holder.like.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -53,7 +66,6 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder>{
     }
 
     class PetViewHolder extends RecyclerView.ViewHolder {
-
         ImageView image;
         ImageView like;
         TextView name;

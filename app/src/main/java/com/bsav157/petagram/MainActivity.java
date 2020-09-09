@@ -1,25 +1,49 @@
 package com.bsav157.petagram;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+
+        setUpViewPager();
+
+        if(toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
 
         ImageView im = findViewById(R.id.fav);
         im.setOnClickListener(new View.OnClickListener() {
@@ -29,26 +53,43 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(in);
             }
         });
-        setPets();
     }
 
-    private void setPets(){
-        ArrayList<Pet> pets = new ArrayList<>();
-        pets.add(new Pet("Katty", 5, R.drawable.perro));
-        pets.add(new Pet("Bonny", 0, R.drawable.perro));
-        pets.add(new Pet("Ronny", 1, R.drawable.perro));
-        pets.add(new Pet("Lucas", 3, R.drawable.perro));
-        pets.add(new Pet("Miky", 4, R.drawable.perro));
-        pets.add(new Pet("Sasha", 0, R.drawable.perro));
-        pets.add(new Pet("Doggie", 2, R.drawable.perro));
-        pets.add(new Pet("Dakota", 2, R.drawable.perro));
-        pets.add(new Pet("Tommy", 10, R.drawable.perro));
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return true;
+    }
 
-        RecyclerView recycler = findViewById(R.id.recycler_main);
-        LinearLayoutManager linear = new LinearLayoutManager(this);
-        linear.setOrientation(LinearLayoutManager.VERTICAL);
-        recycler.setLayoutManager(linear);
-        PetAdapter adapter = new PetAdapter(pets, this);
-        recycler.setAdapter(adapter);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent in = new Intent();
+        switch (item.getItemId()){
+            case R.id.mContacto:
+                in.setClass(this, ContactActivity.class);
+                break;
+            case R.id.mAcerca:
+                in.setClass(this, AboutActivity.class);
+                break;
+            default:
+                break;
+        }
+        startActivity(in);
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpViewPager(){
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), agregarFragments()));
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_pet);
+
+    }
+
+    private ArrayList<Fragment> agregarFragments(){
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new PetListFragment());
+        fragments.add(new PerfilFragment());
+        return fragments;
     }
 }
